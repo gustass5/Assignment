@@ -216,7 +216,7 @@ export class DisplayTable {
                 <div
                   class="sortBtn"
                   onClick={() => {
-                    this.changeOrder(0);
+                    this.changeOrder(index);
                   }}
                 >
                   {key} &#8711;

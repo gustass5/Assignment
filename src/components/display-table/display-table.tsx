@@ -196,9 +196,9 @@ export class DisplayTable {
     let dataToDisplay = this.data.slice(temp, temp + this.pageSize);
 
     return (
-      <div className="bigWrapper">
-        <div className="header">
-          <div className="headerText">Search</div>
+      <div class="bigWrapper">
+        <div class="header">
+          <div class="headerText">Search</div>
           <input
             value={this.globalKeyword}
             onChange={e => {
@@ -207,10 +207,10 @@ export class DisplayTable {
           ></input>
         </div>
 
-        <div className="tableHeader">
-          <div className="field">
+        <div class="tableHeader">
+          <div class="field">
             <div
-              className="sortBtn"
+              class="sortBtn"
               onClick={() => {
                 this.changeOrder(0);
               }}
@@ -225,9 +225,9 @@ export class DisplayTable {
             ></input>
           </div>
 
-          <div className="field">
+          <div class="field">
             <div
-              className="sortBtn"
+              class="sortBtn"
               onClick={() => {
                 this.changeOrder(1);
               }}
@@ -242,9 +242,9 @@ export class DisplayTable {
             ></input>
           </div>
 
-          <div className="field">
+          <div class="field">
             <div
-              className="sortBtn"
+              class="sortBtn"
               onClick={() => {
                 this.changeOrder(2);
               }}
@@ -260,7 +260,7 @@ export class DisplayTable {
           </div>
         </div>
         {this.initialData.length === 0 ? (
-          <div className="popUp">Loading...</div>
+          <div class="popUp">Loading...</div>
         ) : (
           <div>
             <table>
@@ -274,16 +274,16 @@ export class DisplayTable {
                     </tr>
                   ))
                 ) : (
-                  <div className="popUp">No results found</div>
+                  <div class="popUp">No results found</div>
                 )}
               </tbody>
             </table>
-            <div className="footer">
-              <div className="btn" onClick={this.prevPage}>
+            <div class="footer">
+              <div class="btn" onClick={this.prevPage}>
                 Previous Page
               </div>
-              <div className="pageNumber">{this.page}</div>
-              <div className="btn" onClick={this.nextPage}>
+              <div class="pageNumber">{this.page}</div>
+              <div class="btn" onClick={this.nextPage}>
                 Next Page
               </div>
             </div>

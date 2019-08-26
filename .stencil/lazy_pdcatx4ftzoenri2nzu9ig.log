@@ -1,0 +1,20 @@
+import { registerInstance as __stencil_registerInstance } from "@stencil/core";
+export const FetchData = class {
+    constructor(hostRef) {
+        __stencil_registerInstance(this, hostRef);
+    }
+    async getDataHandler(event) {
+        const data = await this.fetchData(event.detail.url, event.detail.results);
+        event.detail.callback(data);
+    }
+    async fetchData(url, results) {
+        try {
+            const response = await fetch(url + results.toString());
+            const data = await response.json();
+            return data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+};

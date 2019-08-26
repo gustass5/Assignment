@@ -1,0 +1,10 @@
+import { registerInstance as __stencil_registerInstance } from "@stencil/core";
+import { h } from "@stencil/core";
+export const AppRoot = class {
+    constructor(hostRef) {
+        __stencil_registerInstance(this, hostRef);
+    }
+    render() {
+        return (h("app-fetch-data", null, h("app-display-table", { url: "https://randomuser.me/api/?results=", results: 200, pageSize: 25 })));
+    }
+};

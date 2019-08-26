@@ -6,16 +6,16 @@ import { Component, h, Prop, Event, EventEmitter, State } from "@stencil/core";
 })
 export class DisplayTable {
   initialData = [];
-  keys = ["gender", "nat", "email"];
 
   @State() data = [];
   @State() dataToDisplay = [];
   @State() globalKeyword: string = "";
-  @State() columnKeywords = ["", "", ""];
-  @State() columnSort = ["", "", ""];
+  @State() columnKeywords = [];
+  @State() columnSort = [];
 
   @State() page: number = 1;
 
+  @Prop() keys = [];
   @Prop() pageSize: number;
   @Prop() url: string;
   @Prop() results: number;
@@ -23,6 +23,9 @@ export class DisplayTable {
 
   componentDidLoad() {
     this.getDataHandler();
+    const newArray = new Array(this.keys.length).fill("");
+    this.columnKeywords = newArray;
+    this.columnSort = newArray;
   }
 
   componentWillRender() {
@@ -83,10 +86,6 @@ export class DisplayTable {
           ) {
             return true;
           }
-
-          // if (item[tempKeys[j]].toLowerCase() === gWords[i].toLowerCase()) {
-          //   return true;
-          // }
         }
       });
     }
@@ -100,14 +99,11 @@ export class DisplayTable {
         let keyWords = this.columnKeywords[i].split(" ");
         for (let j = 0; j < keyWords.length; j++) {
           this.data = this.data.filter(function(item) {
-            // if (
-            //   item[tempKeys[i]]
-            //     .toLowerCase()
-            //     .includes(keyWords[j].toLowerCase())
-            // ) {
-            //   return true;
-            // }
-            if (item[tempKeys[i]].toLowerCase() === keyWords[j].toLowerCase()) {
+            if (
+              item[tempKeys[i]]
+                .toLowerCase()
+                .includes(keyWords[j].toLowerCase())
+            ) {
               return true;
             }
           });
@@ -142,6 +138,7 @@ export class DisplayTable {
 
   changeGlobalKeyword(e) {
     this.globalKeyword = e.target.value.toString();
+    this.resetPage();
   }
 
   changeColumnKeyword(e, key) {
@@ -152,6 +149,7 @@ export class DisplayTable {
         return item;
       }
     });
+    this.resetPage();
   }
 
   changeOrder(key) {
@@ -190,6 +188,10 @@ export class DisplayTable {
     }
   };
 
+  resetPage = () => {
+    this.page = 1;
+  };
+
   render() {
     let temp = this.pageSize * (this.page - 1);
 
@@ -208,56 +210,26 @@ export class DisplayTable {
         </div>
 
         <div class="tableHeader">
-          <div class="field">
-            <div
-              class="sortBtn"
-              onClick={() => {
-                this.changeOrder(0);
-              }}
-            >
-              Gender &#8711;
-            </div>
-            <input
-              value={this.columnKeywords[0]}
-              onChange={e => {
-                this.changeColumnKeyword(e, 0);
-              }}
-            ></input>
-          </div>
-
-          <div class="field">
-            <div
-              class="sortBtn"
-              onClick={() => {
-                this.changeOrder(1);
-              }}
-            >
-              Nationality &#8711;
-            </div>
-            <input
-              value={this.columnKeywords[1]}
-              onChange={e => {
-                this.changeColumnKeyword(e, 1);
-              }}
-            ></input>
-          </div>
-
-          <div class="field">
-            <div
-              class="sortBtn"
-              onClick={() => {
-                this.changeOrder(2);
-              }}
-            >
-              Email Adress &#8711;
-            </div>
-            <input
-              value={this.columnKeywords[2]}
-              onChange={e => {
-                this.changeColumnKeyword(e, 2);
-              }}
-            ></input>
-          </div>
+          {this.keys.map((key, index) => {
+            return (
+              <div class="field">
+                <div
+                  class="sortBtn"
+                  onClick={() => {
+                    this.changeOrder(0);
+                  }}
+                >
+                  {key} &#8711;
+                </div>
+                <input
+                  value={this.columnKeywords[index]}
+                  onChange={e => {
+                    this.changeColumnKeyword(e, index);
+                  }}
+                ></input>
+              </div>
+            );
+          })}
         </div>
         {this.initialData.length === 0 ? (
           <div class="popUp">Loading...</div>
@@ -268,9 +240,9 @@ export class DisplayTable {
                 {dataToDisplay.length !== 0 ? (
                   dataToDisplay.map(row => (
                     <tr>
-                      <td>{row.gender}</td>
-                      <td>{row.nat}</td>
-                      <td>{row.email}</td>
+                      {this.keys.map(key => {
+                        return <td>{row[key]}</td>;
+                      })}
                     </tr>
                   ))
                 ) : (

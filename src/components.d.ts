@@ -10,6 +10,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 export namespace Components {
   interface AppDisplayTable {
+    'keys': any[];
     'pageSize': number;
     'results': number;
     'url': string;
@@ -47,6 +48,7 @@ declare global {
 
 declare namespace LocalJSX {
   interface AppDisplayTable extends JSXBase.HTMLAttributes<HTMLAppDisplayTableElement> {
+    'keys'?: any[];
     'onGetData'?: (event: CustomEvent<any>) => void;
     'pageSize'?: number;
     'results'?: number;

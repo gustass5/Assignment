@@ -1,14 +1,14 @@
-import { r as registerInstance, e as createEvent, h } from './core-ab078d9e.js';
-
-const DisplayTable = class {
+import { registerInstance as __stencil_registerInstance, createEvent as __stencil_createEvent } from "@stencil/core";
+import { h } from "@stencil/core";
+export const DisplayTable = class {
     constructor(hostRef) {
-        registerInstance(this, hostRef);
+        __stencil_registerInstance(this, hostRef);
         this.initialData = [];
         this.data = [];
         this.dataToDisplay = [];
         this.globalKeyword = "";
-        this.columnKeywords = [];
-        this.columnSort = [];
+        this.columnKeywords = ["", "", ""];
+        this.columnSort = ["", "", ""];
         this.page = 1;
         this.keys = [];
         this.nextPage = () => {
@@ -28,16 +28,10 @@ const DisplayTable = class {
                 this.page = this.page - 1;
             }
         };
-        this.resetPage = () => {
-            this.page = 1;
-        };
-        this.getData = createEvent(this, "getData", 7);
+        this.getData = __stencil_createEvent(this, "getData", 7);
     }
     componentDidLoad() {
         this.getDataHandler();
-        const newArray = new Array(this.keys.length).fill("");
-        this.columnKeywords = newArray;
-        this.columnSort = newArray;
     }
     componentWillRender() {
         this.handleData();
@@ -84,6 +78,9 @@ const DisplayTable = class {
                     if (item[tempKeys[j]].toLowerCase().includes(gWords[i].toLowerCase())) {
                         return true;
                     }
+                    // if (item[tempKeys[j]].toLowerCase() === gWords[i].toLowerCase()) {
+                    //   return true;
+                    // }
                 }
             });
         }
@@ -100,6 +97,9 @@ const DisplayTable = class {
                             .includes(keyWords[j].toLowerCase())) {
                             return true;
                         }
+                        // if (item[tempKeys[i]].toLowerCase() === keyWords[j].toLowerCase()) {
+                        //   return true;
+                        // }
                     });
                 }
             }
@@ -127,7 +127,6 @@ const DisplayTable = class {
     }
     changeGlobalKeyword(e) {
         this.globalKeyword = e.target.value.toString();
-        this.resetPage();
     }
     changeColumnKeyword(e, key) {
         this.columnKeywords = this.columnKeywords.map((item, index) => {
@@ -138,7 +137,6 @@ const DisplayTable = class {
                 return item;
             }
         });
-        this.resetPage();
     }
     changeOrder(key) {
         let temporaryValue;
@@ -166,14 +164,20 @@ const DisplayTable = class {
             } })), h("div", { class: "tableHeader" }, this.keys.map((key, index) => {
             return (h("div", { class: "field" }, h("div", { class: "sortBtn", onClick: () => {
                     this.changeOrder(0);
-                } }, key, " \u2207"), h("input", { value: this.columnKeywords[index], onChange: e => {
-                    this.changeColumnKeyword(e, index);
+                } }, "Gender \u2207"), h("input", { value: this.columnKeywords[0], onChange: e => {
+                    this.changeColumnKeyword(e, 0);
                 } })));
-        })), this.initialData.length === 0 ? (h("div", { class: "popUp" }, "Loading...")) : (h("div", null, h("table", null, h("tbody", null, dataToDisplay.length !== 0 ? (dataToDisplay.map(row => (h("tr", null, this.keys.map(key => {
+        }), h("div", { class: "field" }, h("div", { class: "sortBtn", onClick: () => {
+                this.changeOrder(1);
+            } }, "Nationality \u2207"), h("input", { value: this.columnKeywords[1], onChange: e => {
+                this.changeColumnKeyword(e, 1);
+            } })), h("div", { class: "field" }, h("div", { class: "sortBtn", onClick: () => {
+                this.changeOrder(2);
+            } }, "Email Adress \u2207"), h("input", { value: this.columnKeywords[2], onChange: e => {
+                this.changeColumnKeyword(e, 2);
+            } }))), this.initialData.length === 0 ? (h("div", { class: "popUp" }, "Loading...")) : (h("div", null, h("table", null, h("tbody", null, dataToDisplay.length !== 0 ? (dataToDisplay.map(row => (h("tr", null, this.keys.map(key => {
             return h("td", null, row[key]);
         }))))) : (h("div", { class: "popUp" }, "No results found")))), h("div", { class: "footer" }, h("div", { class: "btn", onClick: this.prevPage }, "Previous Page"), h("div", { class: "pageNumber" }, this.page), h("div", { class: "btn", onClick: this.nextPage }, "Next Page"))))));
     }
-    static get style() { return "body {\n  background-color: #282c34;\n}\n.bigWrapper {\n  width: 900px;\n  margin: 0 auto;\n  font-family: \"roboto\";\n  color: #abb2bf;\n}\n\ninput {\n  background: none;\n  border-color: #61afef;\n  color: #61afef;\n}\n\n.header {\n  width: 100%;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: end;\n  justify-content: flex-end;\n  padding: 1rem 0;\n  color: #61afef;\n  font-weight: 800;\n}\n\n.headerText {\n  margin-right: 0.5rem;\n}\n\n.sortBtn {\n  text-transform: capitalize;\n}\n\n.sortBtn:hover {\n  color: white;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.tableHeader {\n  display: -ms-flexbox;\n  display: flex;\n  padding: 0.5rem 0;\n  color: #61afef;\n  font-weight: 800;\n}\n\n.field {\n  width: 300px;\n}\n\n.footer {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n  justify-content: center;\n  margin-top: 1rem;\n}\n\n.btn {\n  width: 100px;\n  text-align: center;\n  border: 2px solid#61afef;\n  color: #61afef;\n  padding: 0.5rem;\n  margin: 0 0.5rem;\n  border-radius: 5px;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.btn:hover {\n  cursor: pointer;\n  color: white;\n  border-color: white;\n}\n\n.pageNumber {\n  margin: 0 1rem;\n  color: #61afef;\n  font-size: 2rem;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ntable {\n  width: 100%;\n}\ntr {\n  height: 25px;\n}\n\ntr:nth-child(even) {\n  background-color: #21252b;\n}\ntd {\n  width: 300px;\n}\n\n.popUp {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n  justify-content: center;\n  color: tomato;\n  font-weight: bold;\n  font-size: 2rem;\n}"; }
+    static get style() { return "STYLE_TEXT_PLACEHOLDER:app-display-table"; }
 };
-
-export { DisplayTable as app_display_table };

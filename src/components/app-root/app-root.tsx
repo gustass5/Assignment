@@ -11,6 +11,7 @@ export class AppRoot {
           url="https://randomuser.me/api/?results="
           results={200}
           pageSize={25}
+          keys={["gender", "nat", "email"]}
         ></app-display-table>
       </app-fetch-data>
     );
